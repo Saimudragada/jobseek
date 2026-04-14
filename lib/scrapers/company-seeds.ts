@@ -1,0 +1,111 @@
+// Seed lists of companies per ATS platform.
+// These are the slugs / identifiers used by each platform's API.
+
+export const LEVER_COMPANIES: { slug: string; name: string }[] = [
+  // User-specified known slugs
+  { slug: "github", name: "GitHub" },
+  { slug: "netflix", name: "Netflix" },
+  { slug: "figma", name: "Figma" },
+  { slug: "notion", name: "Notion" },
+  { slug: "linear", name: "Linear" },
+  { slug: "vercel", name: "Vercel" },
+  { slug: "stripe", name: "Stripe" },
+  { slug: "plaid", name: "Plaid" },
+  { slug: "brex", name: "Brex" },
+  { slug: "ramp", name: "Ramp" },
+  { slug: "scale-ai", name: "Scale AI" },
+  { slug: "huggingface", name: "Hugging Face" },
+  { slug: "cohere", name: "Cohere" },
+  { slug: "together-ai", name: "Together AI" },
+  { slug: "weights-biases", name: "Weights & Biases" },
+  { slug: "modal-labs", name: "Modal" },
+  { slug: "replit", name: "Replit" },
+  { slug: "retool", name: "Retool" },
+  { slug: "rippling", name: "Rippling" },
+  { slug: "lattice", name: "Lattice" },
+  // Additional known Lever customers
+  { slug: "anduril", name: "Anduril" },
+  { slug: "anthropic", name: "Anthropic" },
+  { slug: "perplexity", name: "Perplexity AI" },
+  { slug: "mercury", name: "Mercury" },
+  { slug: "deel", name: "Deel" },
+  { slug: "clipboard-health", name: "Clipboard Health" },
+  { slug: "amplitude", name: "Amplitude" },
+  { slug: "mixpanel", name: "Mixpanel" },
+  { slug: "fivetran", name: "Fivetran" },
+  { slug: "airbyte", name: "Airbyte" },
+];
+
+export const ASHBY_COMPANIES: { slug: string; name: string }[] = [
+  { slug: "openai", name: "OpenAI" },
+  { slug: "runway", name: "Runway" },
+  { slug: "CharacterAI", name: "Character AI" },
+  { slug: "Glean", name: "Glean" },
+  { slug: "groq", name: "Groq" },
+  { slug: "cognition-labs", name: "Cognition" },
+  { slug: "replicate", name: "Replicate" },
+  { slug: "descript", name: "Descript" },
+  { slug: "lumaai", name: "Luma AI" },
+  { slug: "sierra", name: "Sierra" },
+  { slug: "pika", name: "Pika" },
+  { slug: "fireworks-ai", name: "Fireworks AI" },
+  { slug: "perplexityai", name: "Perplexity AI" },
+  { slug: "exa", name: "Exa" },
+  { slug: "aisera", name: "Aisera" },
+  { slug: "anysphere", name: "Anysphere (Cursor)" },
+  { slug: "magicai", name: "Magic AI" },
+  { slug: "comet-ml", name: "Comet ML" },
+  { slug: "langchain", name: "LangChain" },
+  { slug: "dust-tt", name: "Dust" },
+];
+
+export const SMARTRECRUITERS_COMPANIES: { slug: string; name: string }[] = [
+  { slug: "Visa", name: "Visa" },
+  { slug: "Equinix", name: "Equinix" },
+  { slug: "Informatica", name: "Informatica" },
+  { slug: "Ericsson", name: "Ericsson" },
+  { slug: "Nielsen", name: "Nielsen" },
+  { slug: "Philips", name: "Philips" },
+  { slug: "McKesson", name: "McKesson" },
+  { slug: "Siemens", name: "Siemens" },
+  { slug: "HP", name: "HP" },
+  { slug: "WalmartGlobalTech", name: "Walmart Global Tech" },
+  { slug: "Bosch", name: "Bosch" },
+  { slug: "Avalara", name: "Avalara" },
+  { slug: "Bazaarvoice", name: "Bazaarvoice" },
+  { slug: "GumGum", name: "GumGum" },
+  { slug: "Ushur", name: "Ushur" },
+  { slug: "Talkdesk", name: "Talkdesk" },
+  { slug: "Icertis", name: "Icertis" },
+  { slug: "Apttus", name: "Apttus" },
+  { slug: "MessageBird", name: "MessageBird" },
+  { slug: "Klue", name: "Klue" },
+];
+
+export const TEAMTAILOR_COMPANIES: { slug: string; name: string }[] = [
+  { slug: "trustpilot", name: "Trustpilot" },
+  { slug: "klarna", name: "Klarna" },
+  { slug: "mentimeter", name: "Mentimeter" },
+  { slug: "quinyx", name: "Quinyx" },
+  { slug: "funnel", name: "Funnel" },
+  { slug: "pleo", name: "Pleo" },
+  { slug: "cision", name: "Cision" },
+  { slug: "kry", name: "Kry" },
+  { slug: "hopin", name: "Hopin" },
+  { slug: "sympa", name: "Sympa" },
+];
+
+// Workday: company subdomain slugs for the Apify workday-jobs-api actor (FJKQ5hqMjjwEVXdHG)
+// slug = the subdomain on *.myworkdayjobs.com
+export const WORKDAY_SLUGS: string[] = [
+  "salesforce",
+  "adobe",
+  "vmware",
+  "docusign",
+  "splunk",
+  "palantir",
+  "workday",
+  "paloaltonetworks",
+  "intuit",
+  "okta",
+];
