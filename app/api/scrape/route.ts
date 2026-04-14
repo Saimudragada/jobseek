@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { runAllScrapers } from "@/lib/scrapers/index";
 
-// Secret header to prevent unauthorized triggers
 const SCRAPE_SECRET = process.env.SCRAPE_SECRET ?? "";
 
 export async function POST(req: NextRequest) {
-  // Guard — require secret header in production
-  if (SCRAPE_SECRET) {
-    const provided = req.headers.get("x-scrape-secret") ?? "";
-    if (provided !== SCRAPE_SECRET) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  // Fail closed — if secret is not configured, block all requests
+  if (!SCRAPE_SECRET) {
+    console.error("[/api/scrape] SCRAPE_SECRET env var not set — blocking request");
+    return NextResponse.json({ error: "Endpoint not configured" }, { status: 503 });
+  }
+
+  const provided = req.headers.get("x-scrape-secret") ?? "";
+  if (provided !== SCRAPE_SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {

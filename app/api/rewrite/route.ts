@@ -4,6 +4,8 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+const DAILY_LIMIT = 10;
+
 const SYSTEM_PROMPT = `You are an expert technical resume writer. Rewrite the resume to match the target job.
 
 Follow ALL rules — no exceptions:
@@ -49,6 +51,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: null, error: "job_description required" }, { status: 400 });
   }
 
+  // Rate limit — max 10 rewrites per user per day
+  const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const { count } = await supabase
+    .from("rewrite_logs")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", since);
+
+  if ((count ?? 0) >= DAILY_LIMIT) {
+    return NextResponse.json(
+      { data: null, error: `Daily limit reached — ${DAILY_LIMIT} rewrites per day. Try again tomorrow.` },
+      { status: 429 }
+    );
+  }
+
   const { data: resume } = await supabase
     .from("resumes")
     .select("raw_text")
@@ -80,6 +97,9 @@ Rewrite the resume following all rules above. Output all three sections: SUMMARY
 
     const rewritten =
       message.content[0].type === "text" ? message.content[0].text.trim() : "";
+
+    // Log the successful rewrite for rate limiting
+    await supabase.from("rewrite_logs").insert({ user_id: user.id });
 
     return NextResponse.json({ data: { rewritten }, error: null });
   } catch (err: unknown) {
