@@ -136,13 +136,14 @@
 
 ---
 
-## Phase 6 — Deploy [ ]
+## Phase 6 — Deploy [x]
 
-- [ ] All env vars in Vercel
-- [ ] Production build passes
-- [ ] End-to-end test on production URL
-- [ ] README updated
-- [ ] Final commit v1.0
+- [x] All env vars in Vercel (8 vars added via CLI)
+- [x] Production build passes (0 TS errors, 0 ESLint errors)
+- [x] Deployed to Vercel — https://jobseek-seven.vercel.app
+- [x] End-to-end smoke test: home 307 redirect, /browse → /login confirmed in production
+- [x] README updated (what app does, run locally, env vars, tech stack, ATS sources)
+- [x] Final commit v1.0
 
 ---
 
