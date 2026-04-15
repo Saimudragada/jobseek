@@ -1,4 +1,4 @@
-import { tagTrack, tagLevel, isUSLocation, buildTags, isRecent, type ScrapedJob } from "./utils";
+import { tagTrack, tagLevel, isUSLocation, buildTags, isRecent, stripHtml, type ScrapedJob } from "./utils";
 
 // Companies known to use Greenhouse — covers software/data/aiml hiring
 const COMPANIES: { slug: string; name: string }[] = [
@@ -75,7 +75,7 @@ async function fetchCompanyJobs(
     if (!isUSLocation(location)) continue;
 
     const title = job.title ?? "";
-    const description = job.content ?? "";
+    const description = stripHtml(job.content ?? "");
     const track = tagTrack(title, description);
     if (!track) continue; // skip non-tech roles
 

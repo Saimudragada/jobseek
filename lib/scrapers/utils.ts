@@ -1,4 +1,5 @@
 // Shared utilities: tagging, US filtering, deduplication
+import he from "he";
 
 export type Track = "software" | "data" | "aiml";
 export type Level = "junior" | "mid" | "senior";
@@ -16,6 +17,28 @@ export interface ScrapedJob {
   level: Level | null;
   url: string;
   posted_at: string | null;
+}
+
+// ─── HTML STRIPPING ───────────────────────────────────────────────────────────
+
+/**
+ * Strips HTML tags and decodes entities from ATS job descriptions.
+ * Converts block-level tags (<p>, <li>, <br>) to newlines so structure is preserved.
+ */
+export function stripHtml(html: string): string {
+  if (!html) return "";
+  let text = html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/?(p|div|section|article)[^>]*>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "\n• ")
+    .replace(/<\/li>/gi, "")
+    .replace(/<\/?(ul|ol)[^>]*>/gi, "\n")
+    .replace(/<[^>]*>/g, " ");
+  text = he.decode(text);
+  text = text.replace(/[ \t]+/g, " ");
+  text = text.replace(/\n[ \t]+/g, "\n");
+  text = text.replace(/\n{3,}/g, "\n\n");
+  return text.trim();
 }
 
 // ─── TRACK TAGGING ────────────────────────────────────────────────────────────
