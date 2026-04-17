@@ -38,7 +38,7 @@ async function fetchCompanyJobs(
   const jobs: ScrapedJob[] = [];
 
   for (const job of data.jobs) {
-    // 48-hour recency filter
+    // 24-hour recency filter — publishedAt can be null; isRecent(null) returns false → skip
     if (!isRecent(job.publishedAt)) continue;
 
     const location = job.isRemote

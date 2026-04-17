@@ -38,7 +38,7 @@ async function fetchCompanyJobs(
   const jobs: ScrapedJob[] = [];
 
   for (const job of data as LeverJob[]) {
-    // 48-hour recency filter — createdAt is unix ms
+    // 24-hour recency filter — createdAt is unix ms; skip if missing
     if (!isRecent(job.createdAt)) continue;
 
     const location = job.categories?.location ?? "";

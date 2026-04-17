@@ -69,7 +69,7 @@ export async function scrapeWorkday(): Promise<ScrapedJob[]> {
   const jobs: ScrapedJob[] = [];
 
   for (const item of rawItems) {
-    // 48-hour recency filter
+    // 24-hour recency filter — skip if date_posted missing
     if (!isRecent(item.date_posted)) continue;
 
     // US filter via countries_derived

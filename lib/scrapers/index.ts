@@ -55,6 +55,13 @@ export async function runAllScrapers(): Promise<ScrapeResult> {
   const start = Date.now();
   const errors: string[] = [];
 
+  // Delete jobs older than 24 hours before inserting fresh ones
+  const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const staleClient = createAdminClient();
+  const { error: deleteError } = await staleClient.from("jobs").delete().lt("posted_at", cutoff);
+  if (deleteError) console.warn("[scraper] stale cleanup error:", deleteError.message);
+  else console.log(`[scraper] deleted jobs older than ${cutoff}`);
+
   const [greenhouse, lever, ashby, smartrecruiters, workday] =
     await Promise.allSettled([
       scrapeGreenhouse(),

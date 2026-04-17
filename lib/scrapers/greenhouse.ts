@@ -68,7 +68,7 @@ async function fetchCompanyJobs(
   const jobs: ScrapedJob[] = [];
 
   for (const job of data.jobs ?? []) {
-    // 48-hour recency filter — updated_at is ISO string
+    // 24-hour recency filter — updated_at is ISO string; skip if missing
     if (!isRecent(job.updated_at)) continue;
 
     const location = job.location?.name ?? "";

@@ -179,14 +179,14 @@ export function buildTags(title: string, track: Track | null, level: Level | nul
 
 // ─── RECENCY FILTER ───────────────────────────────────────────────────────────
 
-const FORTY_EIGHT_HOURS_MS = 48 * 60 * 60 * 1000;
+const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
 
-/** Returns true if postedAt (ISO string or unix ms) is within the last 48 hours. */
+/** Returns true if postedAt (ISO string or unix ms) is within the last 24 hours. */
 export function isRecent(postedAt: string | number | null | undefined): boolean {
   if (!postedAt) return false;
   const ts = typeof postedAt === "number" ? postedAt : Date.parse(String(postedAt));
   if (isNaN(ts)) return false;
-  return Date.now() - ts <= FORTY_EIGHT_HOURS_MS;
+  return Date.now() - ts <= TWENTY_FOUR_HOURS_MS;
 }
 
 /**

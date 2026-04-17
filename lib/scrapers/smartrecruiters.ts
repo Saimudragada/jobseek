@@ -42,7 +42,7 @@ async function fetchCompanyJobs(
   const jobs: ScrapedJob[] = [];
 
   for (const job of data.content ?? []) {
-    // 48-hour recency filter
+    // 24-hour recency filter — skip if releasedDate missing
     if (!isRecent(job.releasedDate)) continue;
 
     // US filter — SmartRecruiters uses ISO alpha-2 country codes

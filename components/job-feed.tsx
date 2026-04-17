@@ -65,9 +65,14 @@ export default function JobFeed({ appliedJobIds: initialApplied }: Props) {
         const res = await fetch(`/api/jobs?${params}`);
         const json = await res.json();
         if (json.data) {
-          setJobs((prev) => (append ? [...prev, ...json.data] : json.data));
+          // Safety net: only show jobs from last 24 hours
+          const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+          const fresh = (json.data as Job[]).filter(
+            (j) => j.posted_at && new Date(j.posted_at).getTime() >= cutoff
+          );
+          setJobs((prev) => (append ? [...prev, ...fresh] : fresh));
           setTotal(json.count ?? 0);
-          offset.current += json.data.length;
+          offset.current += fresh.length;
         }
       } finally {
         setLoading(false);
@@ -176,8 +181,22 @@ export default function JobFeed({ appliedJobIds: initialApplied }: Props) {
         </div>
       ) : jobs.length === 0 ? (
         <div className="text-center py-16">
-          <p className="font-serif text-lg text-foreground mb-1">No jobs found</p>
-          <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
+          <p className="font-serif text-lg text-foreground mb-2">
+            {query || source || track || level
+              ? "No jobs found"
+              : "No jobs posted in the last 24 hours"}
+          </p>
+          <p className="text-sm text-muted-foreground mb-5">
+            {query || source || track || level
+              ? "Try adjusting your search or filters"
+              : "Check back soon — new jobs are scraped daily."}
+          </p>
+          <button
+            onClick={() => fetchJobs({ q: query, source, track, level })}
+            className="px-4 py-2 rounded-lg border border-border text-sm text-muted-foreground hover:border-primary/50 hover:text-foreground transition-colors"
+          >
+            Refresh
+          </button>
         </div>
       ) : (
         <>
